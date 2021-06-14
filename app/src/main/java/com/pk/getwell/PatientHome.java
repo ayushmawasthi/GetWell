@@ -1,12 +1,22 @@
 package com.pk.getwell;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -24,6 +34,10 @@ public class PatientHome extends AppCompatActivity {
     Button b1;
     EditText e1;
     LinearLayout l1,l2;
+    ListView listView;
+    String doctorname[]={"Auchi", "Aman", "Akshay"};
+    String date[]={"14 June 2021","15 June 2021", "16 June 2021"};
+    MyAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +51,32 @@ public class PatientHome extends AppCompatActivity {
         b1=findViewById(R.id.btnsubmit_pathome);
         l1=findViewById(R.id.linear_pathome);
         l2=findViewById(R.id.linear2_pathome);
+        listView=findViewById(R.id.listdoctors_pathome);
+
+
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 senddata();
                 l1.setVisibility(View.GONE);
+                fetchdoctors();
+                adapter.notifyDataSetChanged();
                 l2.setVisibility(View.VISIBLE);
+            }
+        });
+         adapter=new MyAdapter(this,doctorname,date);
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(position==0){
+                    System.out.println("First");
+                }
+                else if(position==1){
+                    System.out.println("Second");
+                }
+
             }
         });
     }
@@ -55,15 +89,13 @@ public class PatientHome extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                   System.out.println(response);
+
                 if(response.equals("0"))
                 {
                     Toast.makeText(PatientHome.this, "", Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
-
-
-
                 }
             }
         }, new Response.ErrorListener() {
@@ -83,5 +115,72 @@ public class PatientHome extends AppCompatActivity {
         };
         RequestQueue requestQueue= Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(stringRequest);
+    }
+    private void fetchdoctors() {
+        String url;
+        url="http://getwell.scienceontheweb.net/fetch_doctor.php";
+        problem=e1.getText().toString().trim();
+
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                System.out.println(response);
+                doctorname=response.split(",");
+                adapter.notifyDataSetChanged();
+
+                if(response.equals("0"))
+                {
+                    Toast.makeText(PatientHome.this, "", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams()  {
+                Map<String,String>parms=new HashMap<String, String>();
+
+                parms.put("prob",problem);
+                return parms;
+            }
+        };
+        RequestQueue requestQueue= Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
+    }
+    class MyAdapter extends ArrayAdapter<String>
+    {
+        Context context;
+        String docNames[], docDate[];
+        MyAdapter(Context c,String docN[], String docD[])
+        {
+            super(c,R.layout.doctorlist,R.id.doctorname_custlist,docN);
+            this.context=c;
+            this.docNames=docN;
+            this.docDate=docD;
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            LayoutInflater layoutInflater=(LayoutInflater)getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View row=layoutInflater.inflate(R.layout.doctorlist,parent,false);
+            TextView tv1=row.findViewById(R.id.doctorname_custlist);
+            TextView tv2=row.findViewById(R.id.date_custlist);
+            tv1.setText(docNames[position]);
+            tv2.setText(docDate[position]);
+            return row;
+        }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        adapter.notifyDataSetChanged();
+        return super.onTouchEvent(event);
     }
 }
