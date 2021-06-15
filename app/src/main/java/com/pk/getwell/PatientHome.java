@@ -60,12 +60,12 @@ public class PatientHome extends AppCompatActivity {
                 senddata();
                 l1.setVisibility(View.GONE);
                 fetchdoctors();
-                adapter.notifyDataSetChanged();
+            //    adapter.notifyDataSetChanged();
                 l2.setVisibility(View.VISIBLE);
             }
         });
-         adapter=new MyAdapter(this,doctorname,date);
-        listView.setAdapter(adapter);
+      //   adapter=new MyAdapter(this,doctorname,date);
+    //    listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -90,13 +90,7 @@ public class PatientHome extends AppCompatActivity {
             public void onResponse(String response) {
                   System.out.println(response);
 
-                if(response.equals("0"))
-                {
-                    Toast.makeText(PatientHome.this, "", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
-                }
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -125,16 +119,15 @@ public class PatientHome extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 System.out.println(response);
-                doctorname=response.split(",");
-                adapter.notifyDataSetChanged();
+                String [] temp=response.split("00");
 
-                if(response.equals("0"))
-                {
-                    Toast.makeText(PatientHome.this, "", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
-                }
+                doctorname=temp[0].split(",");
+                date=temp[1].split(",");
+                adapter=new MyAdapter(PatientHome.this,doctorname,date);
+                listView.setAdapter(adapter);
+
+
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -178,9 +171,5 @@ public class PatientHome extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        adapter.notifyDataSetChanged();
-        return super.onTouchEvent(event);
-    }
+
 }

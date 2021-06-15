@@ -5,7 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
+    android:gravity="center_vertical"
     android:orientation="vertical">
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_margin="30dp">
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+         android:text="GetWell"
+          android:textSize="40sp"
+         android:gravity="center"/>
+   </LinearLayout>
 
    <Button
        android:id="@+id/testresp"
