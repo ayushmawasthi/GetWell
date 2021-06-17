@@ -1,5 +1,7 @@
 package com.pk.getwell;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -10,10 +12,15 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -33,6 +40,10 @@ public class DoctorHome extends AppCompatActivity {
     Button b1;
     EditText e1;
     LinearLayout l1,l2;
+    ListView listView;
+    String patient[]={"Auchi", "Aman", "Akshay"};
+    String date[]={"14 June 2021","15 June 2021", "16 June 2021"};
+    MyAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +57,7 @@ public class DoctorHome extends AppCompatActivity {
         l2=findViewById(R.id.linear2_doctorhome);
 
         b1=findViewById(R.id.location_doctorhome);
+        listView=findViewById(R.id.listappoint_dochome);
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,7 +66,9 @@ public class DoctorHome extends AppCompatActivity {
                 getLocation();
                 System.out.println(lat+" "+lon);
                 senddata();
+                
                 l1.setVisibility(View.GONE);
+                fetchappoint();
                 l2.setVisibility(View.VISIBLE);
                 speciality=e1.getText().toString().trim();
 
@@ -63,6 +77,43 @@ public class DoctorHome extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void fetchappoint() {
+        String url;
+        url="http://getwell.scienceontheweb.net/fetch_appointment.php";
+        speciality=e1.getText().toString().trim();
+
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                System.out.println(response);
+                String [] temp=response.split("00");
+
+                patient=temp[0].split(",");
+                date=temp[1].split(",");
+                adapter=new DoctorHome.MyAdapter(DoctorHome.this,patient,date);
+                listView.setAdapter(adapter);
+
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams()  {
+                Map<String,String>parms=new HashMap<String, String>();
+
+                parms.put("spec",speciality);
+                return parms;
+            }
+        };
+        RequestQueue requestQueue= Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
     }
 
     private void senddata() {
@@ -149,6 +200,30 @@ public class DoctorHome extends AppCompatActivity {
                 Toast.makeText(this, "Cant get yor location", Toast.LENGTH_SHORT).show();
             }
 
+        }
+    }
+    class MyAdapter extends ArrayAdapter<String>
+    {
+        Context context;
+        String patNames[], patDate[];
+        MyAdapter(Context c,String docN[], String docD[])
+        {
+            super(c,R.layout.doctorlist,R.id.doctorname_custlist,docN);
+            this.context=c;
+            this.patNames=docN;
+            this.patDate=docD;
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            LayoutInflater layoutInflater=(LayoutInflater)getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View row=layoutInflater.inflate(R.layout.doctorlist,parent,false);
+            TextView tv1=row.findViewById(R.id.doctorname_custlist);
+            TextView tv2=row.findViewById(R.id.date_custlist);
+            tv1.setText(patNames[position]);
+            tv2.setText(patDate[position]);
+            return row;
         }
     }
 
