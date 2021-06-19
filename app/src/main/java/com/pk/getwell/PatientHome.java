@@ -35,8 +35,8 @@ public class PatientHome extends AppCompatActivity {
     EditText e1;
     LinearLayout l1,l2;
     ListView listView;
-    String doctorname[]={"Auchi", "Aman", "Akshay"};
-    String date[]={"14 June 2021","15 June 2021", "16 June 2021"};
+    String doctorname[]={"Auchi"};
+    String date[]={"14 June 2021"};
     MyAdapter adapter;
 
     @Override
@@ -44,8 +44,8 @@ public class PatientHome extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_home);
         String resp = getIntent().getStringExtra("response");
-        System.out.println(resp);
-        phone="12345";
+        System.out.println("Response from previous to Pat"+resp);
+        phone=resp;
         problem="No data";
         e1=findViewById(R.id.problem_pathome);
         b1=findViewById(R.id.btnsubmit_pathome);
@@ -103,7 +103,7 @@ public class PatientHome extends AppCompatActivity {
                 Map<String,String>parms=new HashMap<String, String>();
 
                 parms.put("phone",phone);
-                parms.put("prob",problem);
+                parms.put("prob",problem.toLowerCase());
                 return parms;
             }
         };
@@ -165,8 +165,11 @@ public class PatientHome extends AppCompatActivity {
             View row=layoutInflater.inflate(R.layout.doctorlist,parent,false);
             TextView tv1=row.findViewById(R.id.doctorname_custlist);
             TextView tv2=row.findViewById(R.id.date_custlist);
+
             tv1.setText(docNames[position]);
             tv2.setText(docDate[position]);
+
+
             return row;
         }
     }

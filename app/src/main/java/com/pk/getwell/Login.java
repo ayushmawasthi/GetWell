@@ -75,7 +75,7 @@ public class Login extends AppCompatActivity {
         StringRequest stringRequest=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-              //  System.out.println(response);
+                System.out.println(response);
                 if(response.equals("0"))
                 {
                     Toast.makeText(Login.this, "", Toast.LENGTH_SHORT).show();
@@ -86,13 +86,13 @@ public class Login extends AppCompatActivity {
 
 
                         Intent intent = new Intent(Login.this, DoctorHome.class);
-                        intent.putExtra("response", response);
+                        intent.putExtra("response", phone);
 
                         startActivity(intent);
                     }
                     else{
                         Intent intent = new Intent(Login.this, PatientHome.class);
-                        intent.putExtra("response", response);
+                        intent.putExtra("response", phone);
 
                         startActivity(intent);
 
