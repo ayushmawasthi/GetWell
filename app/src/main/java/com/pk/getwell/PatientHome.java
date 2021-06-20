@@ -37,6 +37,7 @@ public class PatientHome extends AppCompatActivity {
     ListView listView;
     String doctorname[]={"Auchi"};
     String date[]={"14 June 2021"};
+    String doc_phoneNumber[]={"123"};
     MyAdapter adapter;
 
     @Override
@@ -70,15 +71,44 @@ public class PatientHome extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(position==0){
-                    System.out.println("First");
-                }
-                else if(position==1){
-                    System.out.println("Second");
-                }
+                System.out.println(doc_phoneNumber[position]);
+                requestappointment(doc_phoneNumber[position]);
+
 
             }
         });
+    }
+    private void requestappointment( String number)
+    {
+        //TODO: MAke email
+        String url;
+        url="http://getwell.scienceontheweb.net/updateproblem.php";
+        problem=e1.getText().toString().trim();
+
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                System.out.println(response);
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams()  {
+                Map<String,String>parms=new HashMap<String, String>();
+
+                parms.put("phone",phone);
+                return parms;
+            }
+        };
+        RequestQueue requestQueue= Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
+
     }
     private void senddata() {
         String url;
@@ -122,7 +152,8 @@ public class PatientHome extends AppCompatActivity {
                 String [] temp=response.split("00");
 
                 doctorname=temp[0].split(",");
-                date=temp[1].split(",");
+                doc_phoneNumber=temp[1].split(",");
+                date=temp[2].split(",");
                 adapter=new MyAdapter(PatientHome.this,doctorname,date);
                 listView.setAdapter(adapter);
 

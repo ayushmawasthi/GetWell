@@ -47,7 +47,7 @@ public class DoctorHome extends AppCompatActivity {
     private static final int REQUEST_LOCATION=44;
     String lat="0",lon="0",country="0",address="0",locality="0", phone,speciality;
     LocationManager locationManager;
-    Button b1;
+    Button b1,b2;
     EditText e1;
     LinearLayout l1,l2;
     ListView listView;
@@ -69,6 +69,15 @@ public class DoctorHome extends AppCompatActivity {
         l2=findViewById(R.id.linear2_doctorhome);
 
         b1=findViewById(R.id.location_doctorhome);
+        b2=findViewById(R.id.btn_make_appoint_doc);
+        b2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(DoctorHome.this,Doc_Appointment_Form.class);
+                intent.putExtra("phone",phone);
+                startActivity(intent);
+            }
+        });
         listView=findViewById(R.id.listappoint_dochome);
         fusedLocationProviderClient= LocationServices.getFusedLocationProviderClient(this);
         getLocation();
