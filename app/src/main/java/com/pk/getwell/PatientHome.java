@@ -91,10 +91,9 @@ public class PatientHome extends AppCompatActivity {
     }
     private void requestappointment( String number)
     {
-        //TODO: MAke email
+
         String url;
-        url="http://getwell.scienceontheweb.net/updateproblem.php";
-        problem=e1.getText().toString().trim();
+        url="http://316cfad665bb.ngrok.io/mailto/"+phone;
 
         StringRequest stringRequest=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
