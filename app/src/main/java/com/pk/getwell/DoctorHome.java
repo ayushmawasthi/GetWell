@@ -47,9 +47,9 @@ public class DoctorHome extends AppCompatActivity {
     private static final int REQUEST_LOCATION=44;
     String lat="0",lon="0",country="0",address="0",locality="0", phone,speciality;
     LocationManager locationManager;
-    Button b1,b2;
+    Button b1,b2,b3,b4;
     EditText e1;
-    LinearLayout l1,l2;
+    LinearLayout l1,l2,l3;
     ListView listView;
     String patient[]={"Auchi", "Aman", "Akshay"};
     String date[]={"14 June 2021","15 June 2021", "16 June 2021"};
@@ -67,9 +67,12 @@ public class DoctorHome extends AppCompatActivity {
         e1=findViewById(R.id.speciality_doctorhome);
         l1=findViewById(R.id.linear_doctorhome);
         l2=findViewById(R.id.linear2_doctorhome);
+        l3=findViewById(R.id.linear_loc);
 
         b1=findViewById(R.id.location_doctorhome);
         b2=findViewById(R.id.btn_make_appoint_doc);
+        b3=findViewById(R.id.btn_yes_loc_doc);
+        b4=findViewById(R.id.btn_no_loc_doc);
         b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,16 +91,28 @@ public class DoctorHome extends AppCompatActivity {
                 locationManager=(LocationManager) getSystemService(Context.LOCATION_SERVICE);
                 //check for gps
 
-
-                senddata();
-                
+                speciality=e1.getText().toString().trim();
+                sendSpec();
                 l1.setVisibility(View.GONE);
                 fetchappoint();
+                l3.setVisibility(View.VISIBLE);
+
+            }
+        });
+        b3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendgps();
+                l3.setVisibility(View.GONE);
                 l2.setVisibility(View.VISIBLE);
-                speciality=e1.getText().toString().trim();
 
-
-
+            }
+        });
+        b4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                l3.setVisibility(View.GONE);
+                l2.setVisibility(View.VISIBLE);
             }
         });
 
@@ -139,7 +154,7 @@ public class DoctorHome extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void senddata() {
+    private void sendgps() {
         String url;
         url="http://getwell.scienceontheweb.net/updatelocation.php";
 
@@ -176,6 +191,43 @@ public class DoctorHome extends AppCompatActivity {
                 parms.put("locality",locality);
                 parms.put("address",address);
                 parms.put("phone",phone);
+                return parms;
+            }
+        };
+        RequestQueue requestQueue= Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
+    }
+    private void sendSpec()
+    {
+        String url;
+        url="http://getwell.scienceontheweb.net/updatespeciality.php";
+
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                //  System.out.println(response);
+                if(response.equals("0"))
+                {
+                    Toast.makeText(DoctorHome.this, "Updated", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+
+
+
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams()  {
+
+                Map<String,String>parms=new HashMap<String, String>();
+
                 parms.put("spec",speciality.toLowerCase());
 
 
@@ -185,6 +237,8 @@ public class DoctorHome extends AppCompatActivity {
         };
         RequestQueue requestQueue= Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(stringRequest);
+
+
     }
 
     private void getLocation() {

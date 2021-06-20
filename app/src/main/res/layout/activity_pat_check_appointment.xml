@@ -5,10 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="center"
     tools:context=".Pat_Check_Appointment">
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:padding="30dp"
         android:layout_margin="30dp"
         android:elevation="30dp"
@@ -133,5 +134,41 @@
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Take Me There in Car"
+        android:textStyle="bold"
+        android:textColor="#fff"
+        android:background="#A0BA40"
+        android:visibility="invisible"
+        android:id="@+id/btn_navigate_d"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Take Me There in Bicycle"
+        android:textStyle="bold"
+        android:textColor="#fff"
+        android:background="#A0BA40"
+        android:visibility="invisible"
+        android:id="@+id/btn_navigate_b"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Take Me There in Walking"
+        android:textStyle="bold"
+        android:textColor="#fff"
+        android:background="#A0BA40"
+        android:visibility="invisible"
+        android:id="@+id/btn_navigate_w"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Take Me There in Bike"
+        android:textStyle="bold"
+        android:textColor="#fff"
+        android:background="#A0BA40"
+        android:visibility="invisible"
+        android:id="@+id/btn_navigate_l"/>
 
 </LinearLayout>
