@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -31,7 +32,7 @@ import java.util.Map;
 
 public class PatientHome extends AppCompatActivity {
     String phone,problem;
-    Button b1;
+    Button b1,b2;
     EditText e1;
     LinearLayout l1,l2;
     ListView listView;
@@ -50,6 +51,7 @@ public class PatientHome extends AppCompatActivity {
         problem="No data";
         e1=findViewById(R.id.problem_pathome);
         b1=findViewById(R.id.btnsubmit_pathome);
+        b2=findViewById(R.id.btn_check_appoint_pat);
         l1=findViewById(R.id.linear_pathome);
         l2=findViewById(R.id.linear2_pathome);
         listView=findViewById(R.id.listdoctors_pathome);
@@ -67,6 +69,15 @@ public class PatientHome extends AppCompatActivity {
         });
       //   adapter=new MyAdapter(this,doctorname,date);
     //    listView.setAdapter(adapter);
+        b2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(PatientHome.this,Pat_Check_Appointment.class);
+                intent.putExtra("phone",phone);
+                startActivity(intent);
+
+            }
+        });
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

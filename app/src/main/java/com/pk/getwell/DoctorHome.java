@@ -120,7 +120,6 @@ public class DoctorHome extends AppCompatActivity {
                 listView.setAdapter(adapter);
 
 
-
             }
         }, new Response.ErrorListener() {
             @Override

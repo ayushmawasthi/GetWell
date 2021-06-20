@@ -38,6 +38,11 @@
            android:id="@+id/listdoctors_pathome">
 
        </ListView>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Check Appointment"
+            android:id="@+id/btn_check_appoint_pat"/>
 
     </LinearLayout>
 
