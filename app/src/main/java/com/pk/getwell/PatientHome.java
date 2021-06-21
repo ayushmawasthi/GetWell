@@ -93,12 +93,13 @@ public class PatientHome extends AppCompatActivity {
     {
 
         String url;
-        url="http://316cfad665bb.ngrok.io/mailto/"+phone;
+        url="https://erayushawasthi99.pythonanywhere.com/mailto/"+phone;
 
         StringRequest stringRequest=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 System.out.println(response);
+                Toast.makeText(PatientHome.this, response, Toast.LENGTH_SHORT).show();
 
 
             }

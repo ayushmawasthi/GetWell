@@ -6,9 +6,9 @@ from email.message import EmailMessage
 
 app = Flask(__name__)
 user = 'rickysharmamailbox@gmail.com'
-password = 'Ricky@123'
+password = '+++++'
 fr_address = 'rickysharmamailbox@gmail.com'
-to_address = 'erayushawasthi99@gmail.com'
+to_address = 'getwellpsit@gmail.com'
 smtp_host = 'smtp.gmail.com' 
 smtp_port = 587
 
