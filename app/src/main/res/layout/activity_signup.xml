@@ -4,60 +4,109 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
     tools:context=".Signup">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="30dp"
+        android:elevation="30dp"
+        android:outlineSpotShadowColor="#DD920F"
+        android:outlineAmbientShadowColor="#E4F127"
+        app:cardBackgroundColor="#FBF4BB"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SignUp Page"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:layout_gravity="center"/>
+
+    </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="50dp">
+        android:layout_height="0dp"
+        android:layout_weight="5"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        app:cardElevation="30dp"
+        android:elevation="30dp"
+        app:cardCornerRadius="30dp"
+        app:cardBackgroundColor="#FFFAD9">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_gravity="center">
             <EditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_height="0dp"
+                android:textColor="#000000"
+                android:layout_weight="1"
+                android:textColorHint="#000000"
+                android:backgroundTint="#A7FF15"
+                android:gravity="center"
                 android:hint="Name"
                 android:id="@+id/name_signup"
                 />
 
             <EditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_height="0dp"
+                android:textColor="#000000"
+                android:layout_weight="1"
+                android:textColorHint="#000000"
+                android:backgroundTint="#A7FF15"
+                android:gravity="center"
                 android:hint="Phone Number"
                 android:id="@+id/phone_signup"
                 />
             <EditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_height="0dp"
+                android:textColor="#000000"
+                android:layout_weight="1"
+                android:textColorHint="#000000"
+                android:backgroundTint="#A7FF15"
+                android:gravity="center"
                 android:hint="Password"
                 android:id="@+id/pass_signup"
                 />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:orientation="vertical"
+            android:layout_gravity="center">
 
             <Button
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:text="I am a Doctor"
-                android:layout_margin="30dp"
+                android:layout_margin="20dp"
                 android:id="@+id/btn_d_signup"
                 />
             <Button
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:text="I am a Patient"
-                android:layout_margin="30dp"
+                android:layout_margin="20dp"
                 android:id="@+id/btn_p_signup"
                 />
-
+        </LinearLayout>
 
 
         </LinearLayout>
